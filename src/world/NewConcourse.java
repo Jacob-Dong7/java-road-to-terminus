@@ -127,9 +127,16 @@ public class NewConcourse extends Settlement {
         } else {
             while (true) {
                 gc.control.inSettlement(gc, this.settlementArea);
-                break;
+            System.out.println("==================================================");
+            System.out.print("You step away from the noise and warmth of New Concourse.\n");
+            System.out.print("The hum of generators fades behind you as the heavy doors close with a dull metallic thud.\n\n");
+            System.out.print("Cold air bites immediately.\n");
+            System.out.print("Ash drifts across the cracked pavement outside.\n\n");
+            System.out.print("Whatever safety the settlement offered is now behind you.\n");
+            System.out.print("The surface stretches ahead — silent, grey, and unforgiving.\n");
+            System.out.println("==================================================");
+            break;
             }
-
             System.out.println(">> LEVEL ADVANCED");
         }
     }

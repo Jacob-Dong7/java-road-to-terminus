@@ -26,6 +26,7 @@ C:\Programming\Java\dead-sun\java-project-dead-sun\src\items\Healing.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\items\HealingItem.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\items\Items.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\items\Weapon.java
+C:\Programming\Java\dead-sun\java-project-dead-sun\src\player\LevelUp.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\player\Player.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\player\Stats.java
 C:\Programming\Java\dead-sun\java-project-dead-sun\src\world\Maintenance.java

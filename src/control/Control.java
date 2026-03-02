@@ -326,7 +326,7 @@ public class Control {
                     System.out.println("==================================================");
                     System.out.println("WARNING");
                     System.out.println("==================================================");
-                    System.out.println("You cannot return to New Concourse once you leave.");
+                    System.out.println("You cannot return once you leave.");
                     System.out.println("Your journey continues from here.");
                     System.out.println("[2] Proceed");
                     System.out.println("[1] Return");
@@ -348,11 +348,11 @@ public class Control {
                     continue;
                 }
             } else if (userInput == 3) {
-                Boolean visited = settlementArea.get(current).visited();
                 Trader trader = settlementArea.get(current).getTrader();
+                Boolean visited = trader.visited();
                 trader.printDescription(visited);
 
-                if (visited == false) settlementArea.get(current).visit();
+                if (visited == false) trader.visitTrader();
 
                 whileTrading(settlementArea.get(current).getTrader(), gc);
                 userPresent = true;

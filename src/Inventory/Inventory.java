@@ -14,7 +14,7 @@ public class Inventory {
     private static final Scanner scnr = new Scanner(System.in);
 
     public Inventory() {
-        wallet = new Currency(10000000); //start user off with 20 bucks
+        wallet = new Currency(20); //start user off with 20 bucks
         medPouch = new ArrayList<>();
         weaponSling = new ArrayList<>();  
         ammoPouch = new Ammo(5);

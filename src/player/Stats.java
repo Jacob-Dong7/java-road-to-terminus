@@ -7,7 +7,7 @@ public class Stats {
     int strength, charisma, stealth, points, input;
 
     public Stats() {
-        strength = 11110;
+        strength = 0;
         stealth = 0;
         charisma = 0;
         points = 5;

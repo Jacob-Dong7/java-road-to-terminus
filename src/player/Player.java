@@ -51,7 +51,7 @@ public class Player extends Character {
         System.out.println("Please enter your name: ");
 
         //default health weapon and its damage 
-        health = 100000;
+        health = 100;
         currWeapon = Weapon.KNIFE;
         damage = 20;
 

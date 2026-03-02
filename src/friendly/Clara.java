@@ -62,6 +62,7 @@ public class Clara extends Trader {
             "You finish the canned food quickly.",
             "\"You need anything else?\" says Clara"
     };
+    
     return desc;
 
     }
@@ -86,48 +87,72 @@ public class Clara extends Trader {
             Scanner scnr = new Scanner(System.in);
             int input, amount = 0, price = 0, choice; 
 
-            System.out.println("==================================================");
+            System.out.println("==================================================================");
             System.out.println("TRADING - " + getName().toUpperCase() + "'S GENERAL GOODS");
-            System.out.println("Credits: " + gc.inventory.getMoney());
-            System.out.println("==================================================");
+            System.out.printf("Credits: $%,d%n", gc.inventory.getMoney());
+            System.out.println("==================================================================");
+            System.out.println();
+
+            System.out.printf(
+                "%-3s %-25s %-12s %9s %8s%n",
+                "#",
+                "Item",
+                "Effect",
+                "Price",
+                "Stock"
+            );
+            System.out.println("------------------------------------------------------------------");
             for (int i = 0; i < traderInventory.size(); ++i) {
-                System.out.print("[");
-                System.out.print(i + 1);
-                System.out.print("] ");
+                int itemNum = i + 1;
                 if (traderInventory.get(i).getItem() instanceof HealingItem) {
                     HealingItem healingItem = (HealingItem) traderInventory.get(i).getItem();
-                    System.out.print( healingItem.getHeal().getName() + " | PRICE  $" + traderInventory.get(i).getPrice() + " | STOCK " + traderInventory.get(i).getItem().getAmount());
-                    System.out.println(" | HEALING " + traderInventory.get(i).getItem().getAmount() + " HP");
+                    
+                    System.out.printf(
+                        "[%d] %-25s | + %5d HP | $%,5d | STOCK %3d%n",
+                        itemNum,
+                        healingItem.getHeal().getName(),
+                        traderInventory.get(i).getItem().getAmount(),
+                        traderInventory.get(i).getPrice(),
+                        traderInventory.get(i).getItem().getAmount()
+                    );
                 } else if (traderInventory.get(i).getItem() instanceof Ammo) {
-                    System.out.println(traderInventory.get(i).getItem().getName() + " | PRICE  $" + traderInventory.get(i).getPrice() + " | STOCK " + traderInventory.get(i).getItem().getAmount());
+                    System.out.printf(
+                        "[%d] %-25s |   %5s    | $%,5d | STOCK %3d%n",
+                        itemNum,
+                        traderInventory.get(i).getItem().getName(),
+                        "-",
+                        traderInventory.get(i).getPrice(),
+                        traderInventory.get(i).getItem().getAmount()
+                    );
                 }
             }
-            System.out.println("--------------------------------------------------");
+            System.out.println("------------------------------------------------------------------");
             System.out.println("[0] Return");
-            System.out.println("==================================================");
+            System.out.println("==================================================================");
 
             input = scnr.nextInt();
             if (input > traderInventory.size() || input < 0) {
                 System.out.println("--------------------------------------------------");
                 System.out.println("Select from avaliable actions");
                 System.out.println("--------------------------------------------------");
+                continue;
             }
 
             if (input == 0) return;
 
-            choice = input;
+            choice = input - 1;
 
-            if (traderInventory.get(choice - 1).getItem().getAmount() <= 0) {
+            if (traderInventory.get(choice).getItem().getAmount() <= 0) {
                 noStock();
                 continue;
             }
 
-            if (traderInventory.get(choice - 1).getItem() instanceof Ammo) {
+            if (traderInventory.get(choice).getItem() instanceof Ammo) {
                 System.out.println("--------------------------------------------------");
-                System.out.println("Enter Quantity (Stock Left " + traderInventory.get(choice - 1).getItem().getAmount() + "): ");
+                System.out.println("Enter Quantity (Stock Left " + traderInventory.get(choice).getItem().getAmount() + "): ");
                 System.out.println("--------------------------------------------------");
                 input = scnr.nextInt();
-                if (input < 0 || input > traderInventory.get(choice - 1).getItem().getAmount()) {
+                if (input < 0 || input > traderInventory.get(choice).getItem().getAmount()) {
                     System.out.println("--------------------------------------------------");
                     System.out.println("Out of stock");
                     System.out.println("--------------------------------------------------");
@@ -135,7 +160,7 @@ public class Clara extends Trader {
                 }
 
                 amount = input;
-                price = traderInventory.get(choice - 1).getPrice() * amount;
+                price = traderInventory.get(choice).getPrice() * amount;
                  System.out.println("-23");
                 if (gc.inventory.getMoney() < price) {
                     noMoney();
@@ -145,18 +170,17 @@ public class Clara extends Trader {
                     gc.inventory.findAmmo(amount);
                     System.out.println("--------------------------------------------------");
                     System.out.println("+ " + amount + " ammo");
-                    System.out.println("--------------------------------------------------");
-
+                    System.out.println("- $" + price);
                 }
-            } else if (traderInventory.get(choice - 1).getItem() instanceof HealingItem) {
+            } else if (traderInventory.get(choice).getItem() instanceof HealingItem) {
                 System.out.println("--------------------------------------------------");
-                System.out.println("Enter Quantity (Stock Left " + traderInventory.get(choice - 1).getItem().getAmount() + "): ");
+                System.out.println("Enter Quantity (Stock Left " + traderInventory.get(choice).getItem().getAmount() + "): ");
                 System.out.println("--------------------------------------------------");
-                HealingItem heal = (HealingItem) traderInventory.get(choice - 1).getItem();
+                HealingItem heal = (HealingItem) traderInventory.get(choice).getItem();
                 Healing newHeal = (Healing) heal.getHeal();
 
                 input = scnr.nextInt();
-                if (input < 0 || input > traderInventory.get(choice - 1).getItem().getAmount()) {
+                if (input < 0 || input > heal.getAmount()) {
                     System.out.println("--------------------------------------------------");
                     System.out.println("Out of stock");
                     System.out.println("--------------------------------------------------");
@@ -165,16 +189,17 @@ public class Clara extends Trader {
 
 
                 amount = input;
-                price = amount * traderInventory.get(choice - 1).getPrice();
+                price = amount * traderInventory.get(choice).getPrice();
 
                 if (gc.inventory.getMoney() < price) {
                     noMoney();
                     continue;
                 } else {
                     Boolean hasHeal = false;
+                    System.out.println("--------------------------------------------------");
                     for (HealingItem med : gc.inventory.getMedPouch()) {
-                        if (med.getHeal() ==  heal.getHeal()) {
-                            System.out.println("+ " + heal.getName()  + " x" + amount);
+                        if (med.getHeal() ==  newHeal) {
+                            System.out.println("+ " + newHeal.getName()  + " x" + amount);
                             med.buyItem(amount);
                             hasHeal = true;
                             break;
@@ -185,12 +210,14 @@ public class Clara extends Trader {
                         System.out.println("+ " + newHeal.getName() + " x" + amount + " (New item added to Medical Pouch)");
                         gc.inventory.getMedPouch().add(new HealingItem(newHeal, amount));
                     }
+                    System.out.println("- $" + price);
+                    System.out.println("--------------------------------------------------");
 
                 }
 
                 }
 
-                traderInventory.get(choice - 1).sell(amount);
+                traderInventory.get(choice).sell(amount);
                 
             }
         } 

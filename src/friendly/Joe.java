@@ -61,18 +61,30 @@ public class Joe extends Trader{
 
         while (true) {
             hasWeapon = false;
-            System.out.println("==================================================");
+            System.out.println("==================================================================");
             System.out.println("TRADING - " + getName().toUpperCase() + "'S WEAPONS & ARMS");
-            System.out.println("Credits: " + gc.inventory.getMoney());
-            System.out.println("==================================================");
+            System.out.printf("Credits: $%,d%n", gc.inventory.getMoney());
+            System.out.println("==================================================================");
+            System.out.println();
+            System.out.printf(
+                "%-4s %-25s %7s %10s %7s%n",
+                "#", "Weapon", "DMG", "Price", "Stock"
+            );
+            System.out.println("------------------------------------------------------------------");
             for (int i = 0; i < traderWeapon.size(); ++i) {
-                System.out.print("[");
-                System.out.print(i + 1);
-                System.out.println("] " + traderWeapon.get(i).getWeapon().getName() + " | DMG  " + traderWeapon.get(i).getWeapon().getDamage() + " | PRICE  $" + traderWeapon.get(i).getPrice() + " | STOCK  " + traderWeapon.get(i).getAmount());
+                int itemNum = i + 1;
+                System.out.printf(
+                    "[%-4d] %-25s | %-9d | $%-,7d | %-9s%n",
+                    itemNum,
+                    traderWeapon.get(i).getWeapon().getName(),
+                    traderWeapon.get(i).getWeapon().getDamage(),
+                    traderWeapon.get(i).getPrice(),
+                    traderWeapon.get(i).getAmount()
+                );
             }
-            System.out.println("--------------------------------------------------");
+            System.out.println("------------------------------------------------------------------");
             System.out.println("[0] Return");
-            System.out.println("==================================================");
+            System.out.println("==================================================================");
 
             input = scnr.nextInt();
             if (input > traderWeapon.size() || input < 0) {

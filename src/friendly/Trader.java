@@ -9,6 +9,7 @@ public abstract class Trader {
     protected final TraderType type;
     protected ArrayList<TraderItem> traderInventory;
     protected ArrayList<TraderWeapon> traderWeapon;
+    Boolean visited = false;
 
     //initalize 
 
@@ -17,6 +18,14 @@ public abstract class Trader {
         this.type = type;
         traderInventory = new ArrayList<>();
         traderWeapon = new ArrayList<>();
+    }
+
+    public void visitTrader() {
+        visited = true;
+    }
+
+    public Boolean visited() {
+        return visited;
     }
 
     public abstract void populateVendor();
